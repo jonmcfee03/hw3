@@ -45,7 +45,10 @@ class Magic8Ball():
     # Then it returns the answer at the randomly picked index.
 
     # YOUR ANSWER HERE
-
+    def get_random_answer(self):
+        index = random.randint(0, len(self.answer_list)-1)
+        self.answer_history_list.append(index)
+        return self.answer_list[index]
 
     # Create the shake method 
     # Argument: A question (string)
@@ -57,6 +60,13 @@ class Magic8Ball():
     #               returns the answer from get_random_answer.
 
     # YOUR ANSWER HERE
+    def shake(self, question):
+        for s in self.question_history_list:
+            if (s == question):
+                return "I've already answered that question"
+            else:
+                self.question_history_list.append(question)
+                return self.get_random_answer()
 
 
     # Create the print_question_history method
