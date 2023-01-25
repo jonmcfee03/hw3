@@ -64,9 +64,8 @@ class Magic8Ball():
         for s in self.question_history_list:
             if (s == question):
                 return "I've already answered that question"
-            else:
-                self.question_history_list.append(question)
-                return self.get_random_answer()
+        self.question_history_list.append(question)
+        return self.get_random_answer()
 
 
     # Create the print_question_history method
@@ -80,11 +79,13 @@ class Magic8Ball():
 
     # YOUR ANSWER HERE
     def print_question_history(self):
-        if (len(self.answer_history_list == 0)):
+        if (len(self.answer_history_list) == 0):
             print("None yet")
         else:
-            for x in self.answer_history_list:
-                print("{x} {self.question_history_list[x]} - {self.answer_history_list[x]}")
+            for x in range(len(self.answer_history_list)):
+                index = self.answer_history_list[x]
+                out = "["+str(index)+"] " + self.question_history_list[x] + " - " + self.answer_list[index]
+                print(out)
 
     # EXTRA POINTS
     # Create the answer_frequency method.
@@ -104,39 +105,30 @@ class Magic8Ball():
 
     def answer_frequency(self, n):
         # YOUR ANSWER BELOW
+        # affirmative = ["Definitely", "Most likely", "It is certain"]
+        # negative = ["Very doubtful", "Don't count on it", "No"]
 
-
-        affirmative = ["Definitely", "Most likely", "It is certain"]
-        negative = ["Very doubtful", "Don't count on it", "No"]
-        aff_count = [0,0,0]
-        neg_count = [0,0,0]
-        other_count = 0
-
+        tot_count = [0,0,0,0,0,0,0,0]
         for i in range(n):
             ans = self.get_random_answer()
-            for x in len(affirmative):
-                if (ans == affirmative[x]):
-                    aff_count[x]+=1
-                elif (ans == negative[x]):
-                    neg_count[x]+=1
-                else:
-                    other_count+=1
+            for x in range(len(self.answer_list)):
+                if (ans == self.answer_list[x]):
+                    tot_count[x]+=1
+
+
                    
 
-        for x in range(len(affirmative)):
-            print(affirmative[x], ": ", {str(aff_count[x])})
-        for x in range(len(negative)):
-            print(negative[x], ": ", {str(neg_count[x])})
+        aff_count = tot_count[0] + tot_count[1] + tot_count[2]
+        other_count = tot_count[3] + tot_count[4]
+        neg_count = tot_count[5] + tot_count[6] + tot_count[7]
+        for x in range(len(tot_count)):
+            out = self.answer_list[x] + ": " + str(tot_count[x])
+            print(out)
 
-        total_aff = 0
-        total_neg = 0
-        for x in aff_count:
-            total_aff+=x
-        for x in neg_count:
-            total_neg+=x
-        if [total_aff > total_neg and total_aff > other_count]:
+
+        if (aff_count > neg_count and aff_count > other_count):
             print("The most common answer was affirmative.")
-        elif [total_neg > total_aff and total_neg > other_count]:
+        elif (neg_count > aff_count and neg_count > other_count):
             print("The most common answer was negative.")
         else:
             print("The most common answer was neither affirmative nor negative.")
@@ -154,17 +146,18 @@ def main():
     "Don't count on it", 
     "No",
     ]
-    magic8ball = Magic8Ball(answer_list)
-
+    ball = Magic8Ball(answer_list)
     # Get the first question or quit
-    
+    question = input("Ask a question or type quit: ")
     # Loop while question is not "quit"
-
+    while(not question == "quit"):
         # shake the ball and get an answer
-
+        ans = ball.shake(question)
         # print question - answer
+        print(question, "-", ans)
+        # get the next question or quit
+        question = input("Ask a question or type quit: ")
 
-        # get the next question or quit 
 
 
 def test():
@@ -213,11 +206,11 @@ def test():
 
     # EXTRA POINTS
     # Uncomment the lines below if you attempt the extra credit!
-    # print("* Testing answer_frequency method with 200 responses")
-    # bot.answer_frequency(200)
+    print("* Testing answer_frequency method with 200 responses")
+    bot.answer_frequency(200)
 
 
 # Only run the main function if this file is being run (not imported)
 if __name__ == "__main__":
-    main()
-    # test() #TODO: Uncomment when you are ready to test your Magic8Ball class
+    #main()
+    test() #TODO: Uncomment when you are ready to test your Magic8Ball class
