@@ -79,7 +79,12 @@ class Magic8Ball():
     #  each on a separate line.
 
     # YOUR ANSWER HERE
-
+    def print_question_history(self):
+        if (len(self.answer_history_list == 0)):
+            print("None yet")
+        else:
+            for x in self.answer_history_list:
+                print("{x} {self.question_history_list[x]} - {self.answer_history_list[x]}")
 
     # EXTRA POINTS
     # Create the answer_frequency method.
@@ -100,16 +105,41 @@ class Magic8Ball():
     def answer_frequency(self, n):
         # YOUR ANSWER BELOW
 
-        # affirmative = ["Definitely", "Most likely", "It is certain"]
-        # nagative = ["Very doubtful", "Don't count on it", "No"]
 
-        print()
-        # if [SOME_CONDITION]:
-        #     print("The most common answer was affirmative.")
-        # elif [SOME_CONDITION]:
-        #     print("The most common answer was negative.")
-        # else:
-        #     print("The most common answer was neither affirmative nor negative.")
+        affirmative = ["Definitely", "Most likely", "It is certain"]
+        negative = ["Very doubtful", "Don't count on it", "No"]
+        aff_count = [0,0,0]
+        neg_count = [0,0,0]
+        other_count = 0
+
+        for i in range(n):
+            ans = self.get_random_answer()
+            for x in len(affirmative):
+                if (ans == affirmative[x]):
+                    aff_count[x]+=1
+                elif (ans == negative[x]):
+                    neg_count[x]+=1
+                else:
+                    other_count+=1
+                   
+
+        for x in range(len(affirmative)):
+            print(affirmative[x], ": ", {str(aff_count[x])})
+        for x in range(len(negative)):
+            print(negative[x], ": ", {str(neg_count[x])})
+
+        total_aff = 0
+        total_neg = 0
+        for x in aff_count:
+            total_aff+=x
+        for x in neg_count:
+            total_neg+=x
+        if [total_aff > total_neg and total_aff > other_count]:
+            print("The most common answer was affirmative.")
+        elif [total_neg > total_aff and total_neg > other_count]:
+            print("The most common answer was negative.")
+        else:
+            print("The most common answer was neither affirmative nor negative.")
 
 
 
@@ -127,7 +157,7 @@ def main():
     magic8ball = Magic8Ball(answer_list)
 
     # Get the first question or quit
-
+    
     # Loop while question is not "quit"
 
         # shake the ball and get an answer
