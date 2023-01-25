@@ -19,6 +19,10 @@ class Magic8Ball():
     # (3) and sets this object's answer_history_list (instance variable) to an empty list.
 
     # YOUR ANSWER HERE
+    def __init__(self, answer_set):
+        self.answer_list = answer_set
+        self.question_history_list = []
+        self.answer_history_list = []
 
 
     # Create the __str__ method
@@ -29,7 +33,8 @@ class Magic8Ball():
     # for answer list ['Yes', 'No', 'Maybe'], it should return a string, "['Yes', 'No', 'Maybe']"
 
     # YOUR ANSWER HERE
-
+    def __str__(self):
+        return str(self.answer_list)
 
     # Create the get_random_answer method
     # Argument: None
